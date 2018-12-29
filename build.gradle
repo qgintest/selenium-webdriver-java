@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = '0.00'
+
+//create a single Jar with all dependencies including properties
+task fatJar(type: Jar) {
+      zip64 true
+      manifest {
+        attributes 'Implementation-Title': 'selenium-webdriver-java', 
+             'Implementation-Version': version,
+             'Main-Class': 'com.qgintest.webdriver.app.TestRunner'
+    }
+
+    baseName = project.name + '-stand-alone'
+    from {
+      configurations.compile.collect {
+             it.isDirectory() ? it : zipTree(it) }
+             }
+
+    with jar
+    destinationDir = file("target")
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+	compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+	compile group: 'com.beust', name: 'jcommander', version: '1.72'
+}
+
+dependencies {
+    testCompile 'org.testng:testng:6.8.1'
+}
+
+test{
+	useTestNG(){
+		suites 'src/main/resources/testsuites/testsuite.xml'
+	}
+}
+

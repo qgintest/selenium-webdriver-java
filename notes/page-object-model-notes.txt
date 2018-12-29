@@ -1,0 +1,9 @@
+Page Object Model is a design pattern to create Object Repository for web UI elements.
+Under this model, for each web page in the application, there should be corresponding page class.
+This Page class will find the WebElements of that web page and also contains Page methods which perform operations on those WebElements.
+
+Page Factory is an inbuilt Page Object Model concept for Selenium WebDriver but it is very optimized.
+concept of separation of Page Object Repository and Test Methods
+
+with the help of PageFactory class, we use annotations @FindBy to find WebElement. 
+We use initElements method to initialize web elements

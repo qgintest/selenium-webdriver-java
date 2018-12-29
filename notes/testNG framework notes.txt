@@ -1,0 +1,40 @@
+ TESTNG Sequencing Hierarchy: 
+  -The below sequence describes the order TestNG will execute the annotations. This is important to know for framework management. 
+ 
+@Before Suite 
+This will execute before the Test Suite
+
+	@BeforeTest 
+	This will execute before the Test
+
+		@BeforeClass
+		This will execute before the Class
+
+			@Before Method
+			This will execute before every Method
+
+				@Test
+				This is the Test Case 1
+
+			@AfterMethod
+			This will execute after every Method
+
+			@BeforeMethod
+			This will execute before every Method
+
+				@Test
+				This is the Test Case 2
+
+			@AfterMethod
+			This will execute after every Method
+
+		@AfterClass
+		This will execute after the Class
+
+	@AfterTest
+	This will execute after the Test
+
+@AfterSuite
+This will execute after the Test Suite
+
+https://examples.javacodegeeks.com/enterprise-java/testng/testng-listeners-example/ to get more info on the TestNG listeners
