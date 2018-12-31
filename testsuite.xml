@@ -9,10 +9,12 @@
  	 </listeners>
 
 	<parameter name="Browser-Type"  value="chrome" />
+	<parameter name="UsePreviousSession"  value="false" /> <!-- Experimental. Do not turn on -->
+	
 
     <test name="Regression Tests">
         <classes>
-            <class name="com.qgintest.webdriver.tests.PositiveTests" />
+            <class name="com.qgintest.webdriver.tests.MercuryToursTests" />
         </classes>
     </test>
 </suite>

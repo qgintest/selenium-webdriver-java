@@ -26,7 +26,7 @@ public class TestDeveloper {
 		XmlTest test = new XmlTest(suite);
 		test.setName("Regression Tests");
 		List<XmlClass> classes = new ArrayList<XmlClass>();
-		classes.add(new XmlClass("com.qgintest.webdriver.tests.PositiveTests"));
+		classes.add(new XmlClass("com.qgintest.webdriver.tests." + "MercuryToursPages"));
 		test.setXmlClasses(classes) ;
 		test.addParameter("Browser-Type", mainArgs.browserType);
 		

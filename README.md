@@ -20,5 +20,5 @@ Selenium Webdriver using Java
 ####Sample Websites used
 
 http://newtours.demoaut.com/
-
+http://www.way2automation.com/demo.html
 
