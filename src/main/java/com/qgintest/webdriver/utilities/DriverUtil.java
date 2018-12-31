@@ -183,7 +183,7 @@ public class DriverUtil {
 		
 		return null;
 		//return ThrowAwayUtil.createDriverFromSession(prop.getProperty("sessionId"), sessionURL);
-
+		//http://tarunlalwani.com/post/reusing-existing-browser-session-selenium-java/
 	}
 	
 	public static void writeBrowserSessionToFileExperimental(RemoteWebDriver driver){
