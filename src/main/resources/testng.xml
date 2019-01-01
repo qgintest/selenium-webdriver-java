@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Mercury Tours Website Test Suite">
+
+	<listeners>
+		<listener class-name="com.qgintest.webdriver.listeners.ExecutionListener"></listener> <!-- monitors the beginning and end of a TestNG run -->
+		<listener
+			class-name="com.qgintest.webdriver.listeners.TestAnnotationTransformerListener"></listener> <!-- allows the modification of annotations at runtime -->
+		<listener class-name="com.qgintest.webdriver.listeners.TestListener"></listener>
+	</listeners>
+
+	<parameter name="Browser-Type" value="chrome" />
+	<parameter name="UsePreviousSession" value="false" /> <!-- Experimental. Do not turn on -->
+
+
+	<test name="Regression Tests">
+		<classes>
+			<class name="com.qgintest.webdriver.tests.MercuryToursTests" />
+		</classes>
+	</test>
+</suite>  
