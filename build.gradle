@@ -5,7 +5,7 @@ apply plugin: 'eclipse'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-version = '0.00'
+version = '0.01'
 
 //create a single Jar with all dependencies including properties
 task fatJar(type: Jar) {
@@ -13,10 +13,10 @@ task fatJar(type: Jar) {
       manifest {
         attributes 'Implementation-Title': 'selenium-webdriver-java', 
              'Implementation-Version': version,
-             'Main-Class': 'com.qgintest.webdriver.app.TestRunner'
+             'Main-Class': 'com.qgintest.webdriver.app.Main'
     }
 
-    baseName = project.name + '-stand-alone'
+    baseName = project.name
     from {
       configurations.compile.collect {
              it.isDirectory() ? it : zipTree(it) }
@@ -41,28 +41,12 @@ dependencies {
 }
 
 dependencies {
-    testCompile 'org.testng:testng:6.8.1'
+    compile 'org.testng:testng:6.8.1'
 }
-
-	sourceSets {
-	    main {
-	        java {
-	            include 'com/qgintest/webdriver/**'
-	            include 'app/**'
-	            include 'commandline/**'
-	            include 'listeners/**'
-	            include 'pages/**'
-	            include 'tests/**'
-	            include 'utilities/**'
-	       	 	  }
-    		 }
-	}
-	
 
 test{
 	useTestNG(){
-		useDefaultListeners = true
-		suites 'src/main/java/com/qgintest/webdriver/testsuite.xml'
+		suites 'src/main/resources/testng.xml'
 	}
 }
 

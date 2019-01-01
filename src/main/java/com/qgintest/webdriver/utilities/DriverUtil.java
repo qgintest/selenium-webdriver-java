@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import com.qgintest.testutilities.date.DateUtil;
 import com.qgintest.testutilities.env.EnvUtil;
 import com.qgintest.testutilities.file.FileUtil;
-import com.qgintest.webdriver.app.TestRunner;
+import com.qgintest.webdriver.app.Main;
 import com.qgintest.testutilities.io.WriteUtil;
 
 import org.apache.commons.io.FileUtils;
@@ -36,6 +36,8 @@ public class DriverUtil {
 	static boolean sessionFlag = false;
 	static RemoteWebDriver previousDriver = null;
 	boolean usePreviousSessionFlag = false;
+	
+	File driverFile = null;
 	
 	static Properties prop = null;
 	
@@ -70,14 +72,12 @@ public class DriverUtil {
 				System.exit(0);
 			}
 		}
-		
-		driverPath = fileUtil.getPathFromResource("drivers") + File.separator + browserType + File.separator;
-		
-		
+				
 		try {
-			file = new File(FileUtil.returnFileUsingWildcard(driverPath, "*" + envUtil.getRunTimeOsSimplified() + "*"));
-			driverName = file.getName();
-			driverPath = "drivers" + File.separator + browserType + File.separator;
+			String os = envUtil.getRunTimeOsSimplified();
+			driverName = returnDriverName(browserType, os);
+			driverFile = setDriver("drivers" + File.separator + browserType + File.separator, driverName, "drivers");
+			driverFile.setExecutable(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,6 +88,37 @@ public class DriverUtil {
 		//this.usePreviousSessionFlag = usePreviousSessionFlag;
 		//System.out.println("Previous session to be used? " + usePreviousSessionFlag);
 
+	}
+	
+	public static String returnDriverName(String browser, String os){
+		
+		String driverName = null;
+		
+		switch(browser){
+		case "chrome":
+			
+			if(os.contentEquals("WINDOWS")){
+				driverName =  "chromedriver-WINDOWS-2.45.exe";
+			}else if(os.contentEquals("MACOS")){
+				driverName =  "chromedriver-MACOS-2.45";
+			}else if(os.contentEquals("LINUX")){
+				driverName = "chromedriver-LINUX-2.45.exe";
+			}
+			
+		 break;
+		 
+		case "firefox":
+			if(os.contentEquals("WINDOWS")){
+				driverName = "geckodriver-WINDOWS-win64-v0.23.0.exe";
+			}else if(os.contentEquals("MACOS")){
+				driverName = "geckodriver-MACOS-0.23.0";
+			}else if(os.contentEquals("LINUX")){
+				driverName = "geckodriver-LINUX-linux64-v0.23.0";
+			}
+			break;
+		}
+		return driverName;
+		
 	}
 	
 	public void launchDriver(){
@@ -115,10 +146,11 @@ public class DriverUtil {
 		@SuppressWarnings("unused")
 		ChromeOptions options = new ChromeOptions();
 		final String initDriver = "webdriver.chrome.driver";
-		File file = setDriver(driverPath, driverName, "drivers");
-		file.setExecutable(true);
+		
+		
+		
 
-		final String startDriver = file.toString();
+		final String startDriver = driverFile.toString();
 
 		/*
 		 * options.addArguments("--headless");
@@ -139,11 +171,7 @@ public class DriverUtil {
 	public void launchFireFox(){
 		
 		final String initDriver = "webdriver.chrome.driver";
-		
-		File file = setDriver(driverPath, driverName, "drivers");
-		file.setExecutable(true);
-
-		final String startDriver = file.toString();
+		final String startDriver = driverFile.toString();
 		
 		System.setProperty(initDriver, startDriver);
 
@@ -156,21 +184,38 @@ public class DriverUtil {
 		}
 	}
 	
-	public File setDriver(String filepath, String filename, String outputDir) {
+	public File setDriver(String filepath, String filename, String outputDir){
 
-		File file = new File(fileUtil.getWorkingDir() + File.separator + outputDir + File.separator + filename + "_"
-				+ DateUtil.returnTimestamp("yyyyMMdd.HHmmss"));
+	    File file = new File(fileUtil.getWorkingDir() + File.separator + outputDir + File.separator + filename + "_" + DateUtil.returnTimestamp("yyyyMMdd.HHmmss"));
 
-		try {
-			try (InputStream in = TestRunner.class.getResourceAsStream("/" + filepath + filename)) {
-				FileUtils.copyInputStreamToFile(in, file);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    try{
+	        try (InputStream in = Main.class.getResourceAsStream("/" + filepath + filename)) {
 
-		return file;
+	            FileUtils.copyInputStreamToFile(in, file);
+	        }
+	    }catch(Exception e){
+	        e.printStackTrace();
+	    }
+
+	    return file;
+
 	}
+	
+//	public File setDriver(String filepath, String filename, String outputDir) {
+//
+//		File file = new File(fileUtil.getWorkingDir() + File.separator + outputDir + File.separator + filename + "_"
+//				+ DateUtil.returnTimestamp("yyyyMMdd.HHmmss"));
+//
+//		try {
+//			try (InputStream in = Main.class.getResourceAsStream("/" + filepath + filename)) {
+//				FileUtils.copyInputStreamToFile(in, file);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		return file;
+//	}
 	
 	public static RemoteWebDriver useExistingBrowserSessionExperimental(){
 		
