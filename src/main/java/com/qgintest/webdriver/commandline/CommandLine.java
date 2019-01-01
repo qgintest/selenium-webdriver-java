@@ -11,4 +11,8 @@ public class CommandLine {
 			//validateWith = ParameterValidation.class, 
 			description = "Select browser you want to run test in. Valid types are \n\tchrome \tfirefox \texplorer")
 	public String browserType = "chrome";
+	
+	@Parameter(names = {"-t", "--tests"}, 
+			description = "Test Suite(s) you want to run")
+	public String testSuite = "MercuryToursTests";
 }

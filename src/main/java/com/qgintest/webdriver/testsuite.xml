@@ -8,7 +8,7 @@
 	        <listener class-name="com.qgintest.webdriver.listeners.TestListener"></listener>
  	 </listeners>
 
-	<parameter name="Browser-Type"  value="chrome" />
+	<parameter name="Browser-Type"  value="firefox" />
 	<parameter name="UsePreviousSession"  value="false" /> <!-- Experimental. Do not turn on -->
 	
 

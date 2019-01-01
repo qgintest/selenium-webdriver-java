@@ -37,15 +37,32 @@ dependencies {
 	compile group: 'org.apache.commons', name: 'commons-text', version: '1.6'
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	compile group: 'com.beust', name: 'jcommander', version: '1.72'
+	compile group: 'com.github.qgintest', name: 'testutilities', version: '1.7.0'	
 }
 
 dependencies {
     testCompile 'org.testng:testng:6.8.1'
 }
 
+	sourceSets {
+	    main {
+	        java {
+	            include 'com/qgintest/webdriver/**'
+	            include 'app/**'
+	            include 'commandline/**'
+	            include 'listeners/**'
+	            include 'pages/**'
+	            include 'tests/**'
+	            include 'utilities/**'
+	       	 	  }
+    		 }
+	}
+	
+
 test{
 	useTestNG(){
-		suites 'src/main/resources/testsuites/testsuite.xml'
+		useDefaultListeners = true
+		suites 'src/main/java/com/qgintest/webdriver/testsuite.xml'
 	}
 }
 
